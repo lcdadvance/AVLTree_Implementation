@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\software\\visualstudio\\VS2022\\project_create_here\\AVLTree_Implementation\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9305BA-529F-41FB-B3D2-AC0406A8C1F8}|AVLTree_Implementation\\AVLTree_Implementation.vcxproj|D:\\software\\visualstudio\\VS2022\\project_create_here\\AVLTree_Implementation\\AVLTree_Implementation\\test.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{4D9305BA-529F-41FB-B3D2-AC0406A8C1F8}|AVLTree_Implementation\\AVLTree_Implementation.vcxproj|solutionrelative:AVLTree_Implementation\\test.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4D9305BA-529F-41FB-B3D2-AC0406A8C1F8}|AVLTree_Implementation\\AVLTree_Implementation.vcxproj|D:\\software\\visualstudio\\VS2022\\project_create_here\\AVLTree_Implementation\\AVLTree_Implementation\\myavl.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{4D9305BA-529F-41FB-B3D2-AC0406A8C1F8}|AVLTree_Implementation\\AVLTree_Implementation.vcxproj|solutionrelative:AVLTree_Implementation\\myavl.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 236,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "test.cpp",
+              "DocumentMoniker": "D:\\software\\visualstudio\\VS2022\\project_create_here\\AVLTree_Implementation\\AVLTree_Implementation\\test.cpp",
+              "RelativeDocumentMoniker": "AVLTree_Implementation\\test.cpp",
+              "ToolTip": "D:\\software\\visualstudio\\VS2022\\project_create_here\\AVLTree_Implementation\\AVLTree_Implementation\\test.cpp",
+              "RelativeToolTip": "AVLTree_Implementation\\test.cpp",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAsAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-08-11T01:41:08.133Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "myavl.hpp",
+              "DocumentMoniker": "D:\\software\\visualstudio\\VS2022\\project_create_here\\AVLTree_Implementation\\AVLTree_Implementation\\myavl.hpp",
+              "RelativeDocumentMoniker": "AVLTree_Implementation\\myavl.hpp",
+              "ToolTip": "D:\\software\\visualstudio\\VS2022\\project_create_here\\AVLTree_Implementation\\AVLTree_Implementation\\myavl.hpp",
+              "RelativeToolTip": "AVLTree_Implementation\\myavl.hpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-08-11T00:56:01.36Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

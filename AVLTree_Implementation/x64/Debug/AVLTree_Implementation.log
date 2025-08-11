@@ -1,0 +1,9 @@
+﻿  test.cpp
+D:\software\visualstudio\VS2022\project_create_here\AVLTree_Implementation\AVLTree_Implementation\myavl.hpp(184,1): warning C4715: “xjcad::lcd::AvlTree1<int>::front”: 不是所有的控件路径都返回值
+D:\software\visualstudio\VS2022\project_create_here\AVLTree_Implementation\AVLTree_Implementation\myavl.hpp(189,1): warning C4715: “xjcad::lcd::AvlTree1<int>::back”: 不是所有的控件路径都返回值
+D:\software\visualstudio\VS2022\project_create_here\AVLTree_Implementation\AVLTree_Implementation\myavl.hpp(355,1): warning C4172: 返回局部变量的地址或临时 : temp
+D:\software\visualstudio\VS2022\project_create_here\AVLTree_Implementation\AVLTree_Implementation\myavl.hpp(263,1): warning C4172: 返回局部变量的地址或临时 : result
+D:\software\visualstudio\VS2022\project_create_here\AVLTree_Implementation\AVLTree_Implementation\myavl.hpp(763,1): warning C4715: “xjcad::lcd::AvlTree1<int>::find”: 不是所有的控件路径都返回值
+D:\software\visualstudio\VS2022\project_create_here\AVLTree_Implementation\AVLTree_Implementation\myavl.hpp(340,1): warning C4172: 返回局部变量的地址或临时 : temp
+D:\software\visualstudio\VS2022\project_create_here\AVLTree_Implementation\AVLTree_Implementation\myavl.hpp(966,1): warning C4715: “xjcad::lcd::AvlTree1<int>::n_inOrder”: 不是所有的控件路径都返回值
+  AVLTree_Implementation.vcxproj -> D:\software\visualstudio\VS2022\project_create_here\AVLTree_Implementation\x64\Debug\AVLTree_Implementation.exe
