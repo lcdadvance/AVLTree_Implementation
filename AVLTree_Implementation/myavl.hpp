@@ -1,13 +1,12 @@
-﻿/* **************************************************
- * Copyright © 2025, Wuxi Xinje Electric Co., Ltd.
- *
-* File Name: myavl.cpp
-* Description:  实现avl树并兼容标准容器操作
-* Others:
-* Version:
-* Author: lcd
-* Date: 2025-08-07
- * **************************************************/
+﻿/*****************************************************************//**
+ * \copyright Copyright © 2025, Wuxi Xinje Electric Co., Ltd.
+ * \file   myavl.hpp
+ * \brief  实现avl树并兼容标准容器操作
+ * \version
+ * \author lcd
+ * \date   August 2025
+ *********************************************************************/
+
 #pragma once
 #include<iostream>
 #include<queue>
@@ -19,6 +18,7 @@ namespace xjcad
 namespace lcd
 {
 // AVL树 = BST树 + 节点平衡操作
+/**  模板类Avl树实现  */
 template<class T>
 class AvlTree1
 {
@@ -28,7 +28,7 @@ public:
 		root_ = nullptr;
 		size_ = 0;
 	}
-	// 拷贝构造 (深拷贝,复制整颗树)
+	/**  拷贝构造 (深拷贝,复制整颗树)  */
 	AvlTree1(const AvlTree1& other) :
 		root_(copyTree(other.root_)), size_(other.size_) {
 	}  // 调用递归复制函数
@@ -37,23 +37,23 @@ public:
 		clear();
 	}
 
-	//赋值操作，operator= 等号运算符重载，也可以防止浅拷贝问题
+	/**  赋值操作，operator = 等号运算符重载，也可以防止浅拷贝问题 */
 	AvlTree1& operator=(const AvlTree1& avl);
 	// 交换函数
 	void swap(AvlTree1& first, AvlTree1& second) noexcept;
 
 
-	// []运算符重载，通过下标的方式访问树的元素，默认按中序遍历访问
-	//1.递归方式访问
-	/*T& operator[](const int index)
+	/**  [] 运算符重载，通过下标的方式访问树的元素，默认按中序遍历访问
+	1.递归方式访问
+	T& operator[](const int index)
 	{
 		return inOrderIndex(index);
-	}*/
-	//2.非递归方式，利用栈
+	}
+	2.非递归方式，利用栈 */
 	T& operator[](const int index) const;
 	T& n_inOrder(const int index, int& m) const;
 
-	//operator== 等号运算符重载,两颗树一样返回true，否则false
+	/**  operator== 等号运算符重载, 两颗树一样返回true，否则false */
 	bool operator== (const AvlTree1& avl) const
 	{
 		if (size_ != avl.size_) {
@@ -67,7 +67,7 @@ public:
 		}
 		return true;
 	}
-	//operator!= 等号运算符重载,两颗树不一样返回true，否则false
+	/**  operator!= 等号运算符重载, 两颗树不一样返回true，否则false */
 	bool operator!= (const AvlTree1& avl) const
 	{
 		if (size_ != avl.size_) {
@@ -84,17 +84,17 @@ public:
 
 public:
 	//---------结点插入/删除-------------
-	//*****AVL树的插入操作
+	/**  AVL树的插入操作 */
 	void insert(const T& val)
 	{
 		root_ = insert(root_, nullptr, size_, val);
 	}
-	//*****AVL树的删除操作
+	/**  AVL树的删除操作 */
 	void remove(const T& val)
 	{
-		root_ = remove(root_, nullptr, size_, val); // 添加父节点参数
+		root_ = remove(root_, size_, val); // 添加父节点参数
 	}
-	//删除第一个结点
+	/**  删除第一个结点 */
 	void pop_front()
 	{
 		if (root_) {
@@ -102,7 +102,7 @@ public:
 			remove(val);
 		}
 	}
-	//删除最后一个结点
+	/**  删除最后一个结点 */
 	void pop_back()
 	{
 		if (!empty()) {
@@ -110,9 +110,10 @@ public:
 			remove(val);
 		}
 	}
-	//删除迭代器指向元素（这个函数要么放到Iterator定义的下面，要么提前声明一下Iterator,不然不知道Iterator是啥）
+	
 	class Iterator;
-	/* it._p是Iterator的私有成员变量，不能访问。两种解决方法
+	/**  删除迭代器指向元素（这个函数要么放到Iterator定义的下面，要么提前声明一下Iterator, 不然不知道Iterator是啥）
+	    it._p是Iterator的私有成员变量，不能访问。两种解决方法
 		1.不访问私有成员变量_p，通过上面方式
 		2.在Iterator类里添加友元声明：friend void AvlTree1<T>::erase(Iterator it);*/
 	void erase(Iterator it) {
@@ -134,12 +135,12 @@ public:
 
 
 	//--------------查询-----------------
-	//1.AVL树的查询操作
+	/**  1.AVL树的查询操作 */
 	bool find(const T& val) const
 	{
 		return find(root_, val);
 	}
-	//2.AVL树节点总数查询
+	/**  2.AVL树节点总数查询 */
 	/*int size() const noexcept
 	{
 		return size(root_);
@@ -148,17 +149,17 @@ public:
 	{
 		return size_;
 	}
-	//3.AVL树层数查询
+	/**  3.AVL树层数查询 */
 	int high() const noexcept
 	{
 		return high(root_);
 	}
-	//4.判空
+	/**  4.判空 */
 	bool empty() const
 	{
 		return root_ == nullptr;
 	}
-	//5.AVL树每一层的节点数
+	/**  5.打印AVL树每一层的节点数 */
 	void levelNum() const
 	{
 		int h = high();
@@ -168,7 +169,7 @@ public:
 		}
 		std::cout << std::endl;
 	}
-	//6.判断是否是AVL树
+	/** 6.判断是否是AVL树 */
 	bool isBalance() const
 	{
 		int l = 0; //递归函数的局部变量形参，用于记录每个节点的层数
@@ -176,7 +177,7 @@ public:
 		isBalance(root_, l, flag);
 		return flag;
 	}
-	//7.返回第一个和最后一个元素
+	/** 7.返回第一个和最后一个元素 */
 	T front() const {
 		if (!empty()) {
 			return inOrderIndex(0);
@@ -190,28 +191,28 @@ public:
 
 
 	//--------------遍历-----------------
-	//前序遍历VLR
+	/** 前序遍历VLR */
 	void preOrder() const
 	{
 		std::cout << "[前序]遍历：";
 		preOrder(root_);
 		std::cout << std::endl;
 	}
-	//中序遍历LVR
+	/** 中序遍历LVR */
 	void inOrder() const
 	{
 		std::cout << "[中序]遍历：";
 		inOrder(root_);
 		std::cout << std::endl;
 	}
-	//后序遍历LRV
+	/** 后序遍历LRV */
 	void postOrder() const
 	{
 		std::cout << "[后序]遍历：";
 		postOrder(root_);
 		std::cout << std::endl;
 	}
-	//层序遍历
+	/** 层序遍历 */
 	void levelOrder() const
 	{
 		int high1 = high(); //树高
@@ -222,7 +223,7 @@ public:
 	}
 
 	//--------------其余------------------
-	//1.清空树 ######
+	/** 1.清空树 */
 	void clear()
 	{
 		if (root_ != nullptr) //树不为空再删（利用层序遍历思想删除BST/AVL树所有节点）
@@ -246,12 +247,13 @@ public:
 		root_ = nullptr; // 置空根指针
 		size_ = 0;
 	}
-	//2.两颗avl树交换函数  eg: tree1.swap(tree2)
+	/** 2.两颗avl树交换函数  eg: tree1.swap(tree2) */
 	void swap(AvlTree1& other) noexcept {
 		using std::swap;
 		swap(root_, other.root_);
+		swap(size_, other.size_);
 	}
-	//3/返回中序遍历结果中索引为i的元素
+	/** 3.返回中序遍历结果中索引为i的元素 */
 	T& inOrderIndex(const int index) const
 	{
 		if (index < 0 || index >= size()) {
@@ -264,28 +266,29 @@ public:
 	}
 
 	struct Node;
+	/** Avl容器的迭代器实现 */
 	class Iterator
 	{
-	public:
-		Iterator(Node* p = nullptr, AvlTree1<T>* pavl = nullptr) :_p(p), _pavl(pavl) {} //迭代器构造函数
-		//不同容器的迭代器不能进行比较运算，没有意义
+	public: ///迭代器构造函数
+		Iterator(Node* p = nullptr, AvlTree1<T>* pavl = nullptr) :_p(p), _pavl(pavl) {}
+		/** 不同容器的迭代器不能进行比较运算，没有意义 */
 		bool operator!=(const Iterator& it) const
 		{
-			//检查迭代器有效性: 检查两迭代器对应的不是同一个容器
+			//检查迭代器有效性: 检查两迭代器对应的是不是同一个容器
 			if (_pavl != it._pavl)
 				throw "Iterator incompatable!";
 			return _p != it._p; //判断它们指向的节点是否一样
 		}
 		bool operator==(const Iterator& it) const
 		{
-			//检查迭代器有效性: 检查两迭代器对应的不是同一个容器
+			//检查迭代器有效性: 检查两迭代器对应的是不是同一个容器
 			if (_pavl != it._pavl)
 				throw "Iterator incompatable!";
 			return _p == it._p;
 		}
 		bool operator<(const Iterator& it) const
 		{
-			//检查迭代器有效性: 检查两迭代器对应的不是同一个容器
+			//检查迭代器有效性: 检查两迭代器对应的是不是同一个容器
 			if (_pavl != it._pavl)
 				throw "Iterator incompatable!";
 			if (!_p || !it._p)  //如果任一迭代器的底层指针为空，返回false
@@ -295,7 +298,6 @@ public:
 		}
 		bool operator<=(const Iterator& it) const
 		{
-			//检查迭代器有效性: 检查两迭代器对应的不是同一个容器
 			if (_pavl != it._pavl)
 				throw "Iterator incompatable!";
 			if (!_p || !it._p)  //如果任一迭代器的底层指针为空，返回false
@@ -305,41 +307,41 @@ public:
 		}
 		bool operator>(const Iterator& it) const
 		{
-			//检查迭代器有效性: 检查两迭代器对应的不是同一个容器
 			if (_pavl != it._pavl)
 				throw "Iterator incompatable!";
-			if (!_p || !it._p)  //如果任一迭代器的底层指针为空，返回false
+			if (!_p || !it._p)
 				return false;
 			else
 				return _p->data_ > it._p->data_;
 		}
 		bool operator>=(const Iterator& it) const
 		{
-			//检查迭代器有效性: 检查两迭代器对应的不是同一个容器
 			if (_pavl != it._pavl)
 				throw "Iterator incompatable!";
-			if (!_p || !it._p)  //如果任一迭代器的底层指针为空，返回false
+			if (!_p || !it._p)
 				return false;
 			else
 				return _p->data_ >= it._p->data_;
 		}
 
-		//前置递增
+		/** 前置递增.
+		    返回其中序遍历序列中该元素后继元素的地址
+			如果迭代器指向空，什么都不做，就不引发异常了*/
 		Iterator& operator++()
 		{
 			if (_p) {
-				_p = nextInOrder(_p);  //应该返回其中序遍历序列中该元素下一个元素的地址
-			}                          //如果迭代器指向空，什么都不做，就不引发异常了
+				_p = nextInOrder(_p); 
+			}                      
 			return *this;
 		}
-		//后置递增
+		/** 后置递增 */
 		Iterator& operator++(int)
 		{
 			Iterator temp = *this;
 			++(*this);
 			return temp;
 		}
-		//前置递减
+		/** 前置递减 */
 		Iterator& operator--()
 		{
 			if (_p) {
@@ -347,7 +349,7 @@ public:
 			}
 			return *this;
 		}
-		//后置递减
+		/** 后置递减 */
 		Iterator& operator--(int)
 		{
 			Iterator temp = *this;
@@ -355,7 +357,8 @@ public:
 			return temp;
 		}
 
-		//类成员运算符重载：it += n（改变原迭代器本身，不返回新迭代器，故不支持(it+1)+3这种链式操作），默认n过大超界时指向最后一个元素
+		/** 类成员运算符重载：it += n.
+		    改变原迭代器本身，不返回新迭代器，故不支持(it+1)+3这种链式操作。默认n过大超界时指向最后一个元素 */
 		Iterator& operator+=(const int& n) {
 			if (n <= 0 || !_p) { return *this; }//n非法或迭代器指向空 
 
@@ -370,20 +373,27 @@ public:
 			this->_p = current; // 避免提前修改 _p：使用 cur 临时变量进行移动，确保在移动过程中不破坏迭代器的当前状态
 			return *this;
 		}
-		//类成员运算符重载：it + n（返回新迭代器，支持 (it+1)+3这种链式操作）
+		/** 类成员运算符重载：it + n.
+		    返回新迭代器，支持 (it+1)+3这种链式操作 */
 		Iterator operator+(const int& n) const {
 			Iterator temp = *this;
 			temp += n;
 			return temp;  //不能返回局部变量temp的引用，即Iterator&
 		}
-		//在类内部定义友元  n + it
+		/**
+		 * 在类内部定义友元  n + it.
+		 * 
+		 * \param n 非负整数
+		 * \param it 迭代器
+		 * \return  一个新的迭代器
+		 */
 		friend Iterator operator+(int n, const Iterator& it) {
 			return it + n;
 		}
 
-		//it -= n  默认n过大超界时指向第一个元素（最小值）
+		/** it -= n  默认n过大超界时指向第一个元素（最小值）*/ 
 		Iterator& operator-=(const int& n) {
-			if (n <= 0) { return *this; }
+			if (n <= 0 || !_p) { return *this; }
 
 			Node* current = this->_p;
 			for (int i = 0; i < n; i++) {
@@ -396,13 +406,13 @@ public:
 			this->_p = current; // 避免提前修改 _p：使用 cur 临时变量进行移动，确保在移动过程中不破坏迭代器的当前状态
 			return *this;
 		}
-		//类成员运算符重载：it - n（返回新迭代器，支持 (it-1)-3这种链式操作）
+		/** 类成员运算符重载：it - n（返回新迭代器，支持 (it-1)-3这种链式操作）*/
 		Iterator operator-(const int& n) const {
 			Iterator temp = *this;
 			temp -= n;
 			return temp;  //不能返回局部变量temp的引用，即Iterator&
 		}
-		//n - it没必要了
+		/// n - it没必要了
 
 		T& operator*() {
 			//检查迭代器有效性: 检查两迭代器对应的不是同一个容器
@@ -411,12 +421,12 @@ public:
 			}
 			return _p->data_;  //解引用返回指针对应节点的数据域
 		}
-		Node* operator->() {
+		Node* operator->() {    //it->_其实就是_p->_
 			return _p;
 		}
 
 	private:
-		// 查找中序后继
+		/** 查找中序后继 */
 		static Node* nextInOrder(Node* node) {
 			if (!node) { return nullptr; }
 
@@ -440,7 +450,7 @@ public:
 			}
 			return node;
 		}
-		// 查找中序前驱
+		/** 查找中序前驱 */
 		static Node* preInOrder(Node* node) {
 			if (!node) { return nullptr; }
 
@@ -465,14 +475,14 @@ public:
 			return node;
 		}
 
-		Node* _p; //维护一个指针，指向AVL树的当前节点
-		AvlTree1<T>* _pavl; //++++++++++++++ 让迭代器知道它是属于哪颗AVL树的
+		Node* _p;  ///<维护一个指针，指向AVL树的当前节点
+		AvlTree1<T>* _pavl; ///<让迭代器知道它是属于哪颗AVL树的.
 
-		friend void AvlTree1<T>::erase(Iterator it);//友元声明
+		friend void AvlTree1<T>::erase(Iterator it);///<友元声明
 		//friend void AvlTree1<T>::erase(Iterator start, Iterator end);
 	};
 
-	Iterator begin()  //返回一个指向AVL树中序遍历中的第一个元素（也就是最小值）的迭代器
+	Iterator begin()  /// 返回一个指向AVL树中序遍历中的第一个元素（也就是最小值）的迭代器
 	{
 		Node* cur = root_;
 		while (cur != nullptr && cur->left_ != nullptr)
@@ -481,11 +491,11 @@ public:
 		}
 		return Iterator(cur, this); //this指向当前容器对象
 	}
-	Iterator end()  //返回一个指向AVL树中序遍历中的最后一个元素（也就是最大值）后面位置的迭代器，所有这里end()迭代器下面的指针指向的是空
+	Iterator end()  /// 返回一个指向AVL树中序遍历中的最后一个元素（也就是最大值）后面位置的迭代器，所有这里end()迭代器下面的指针指向的是空
 	{
 		return Iterator(nullptr, this);
 	}
-	Iterator last() // 获取最后一个元素（中序最大）
+	Iterator last() //  获取最后一个元素（中序最大）
 	{
 		Node* cur = root_;
 		while (cur != nullptr && cur->right_ != nullptr)
@@ -504,7 +514,7 @@ public:
 
 
 private:
-	//定义AVL树节点类型
+	///定义AVL树节点类型
 	struct Node
 	{
 		Node(T data = T()) :data_(data), left_(nullptr), right_(nullptr), parent_(nullptr), height_(1) {}
@@ -512,17 +522,17 @@ private:
 		Node* left_;
 		Node* right_;
 		Node* parent_;
-		int height_; //记录节点高度值
+		int height_; ///<记录节点高度值
 	};
-	Node* root_; //指向根节点的指针
-	int size_; //结点数目
+	Node* root_; ///<指向根节点的指针
+	int size_; ///<结点数目
 
-	//返回节点的高度值
+	/**  返回节点的高度值*/
 	int height(Node* node)
 	{
 		return node == nullptr ? 0 : node->height_;
 	}
-	//右旋转操作  以节点node为轴做右旋转操作，并把新的根节点返回
+	/**  右旋转操作  以节点node为轴做右旋转操作，并把新的根节点返回 */
 	Node* rightRotate(Node* node)
 	{
 		//旋转操作
@@ -541,7 +551,7 @@ private:
 		child->height_ = std::max(height(child->left_), height(child->right_)) + 1;
 		return child; //返回旋转后的子树新的根节点地址，以回溯连接到老根节点的父节点上去
 	}
-	//左旋转操作  以节点node为轴做左旋转操作，并把新的根节点返回
+	/**  左旋转操作  以节点node为轴做左旋转操作，并把新的根节点返回 */
 	Node* leftRotate(Node* node)
 	{
 		//旋转操作
@@ -560,29 +570,29 @@ private:
 		child->height_ = std::max(height(child->left_), height(child->right_)) + 1;
 		return child;
 	}
-	//左平衡操作（左孩子的右子树太高了） 以节点node为轴做左-右旋转操作，并把新的根节点返回
+	/**  左平衡操作（左孩子的右子树太高了） 左 - 右旋转，并把新的根节点返回 */
 	Node* leftBalance(Node* node)
 	{
 		//先左旋
 		node->left_ = leftRotate(node->left_);
-		if (node->left_) {
-			node->left_->parent_ = node; // 更新新左孩子的父指针
-		}
+		//if (node->left_) {
+		//	node->left_->parent_ = node; // 更新新左孩子的父指针
+		//}
 		//再右旋
 		return rightRotate(node); //最终新的根节点就是右旋函数返回的根节点
 	}
-	//右平衡操作（右孩子的左子树太高了） 以节点node为轴做右-左旋转操作，并把新的根节点返回
+	/**  右平衡操作（右孩子的左子树太高了） 右 - 左旋转操作，并把新的根节点返回 */
 	Node* rightBalance(Node* node)
 	{
-		node->right_ = rightRotate(node->right_);
-		if (node->right_) {
-			node->right_->parent_ = node; // 更新新右孩子的父指针
-		}
+		//node->right_ = rightRotate(node->right_);
+		//if (node->right_) {
+		//	node->right_->parent_ = node; // 更新新右孩子的父指针
+		//}
 		return leftRotate(node);
 	}
 
 	//-------------结点插入/删除-----------------
-	//AVL树的插入操作递归实现
+	/** AVL树的插入操作递归实现 */
 	Node* insert(Node* node, Node* parent, int& size_, const T& val)
 	{
 		if (node == nullptr) //递归结束，找到插入位置
@@ -605,15 +615,11 @@ private:
 				Node* child = node->left_;
 				if (height(child->left_) >= height(child->right_)) //1. LL情形 左孩子的左子树太高
 				{
-					Node* newRoot = rightRotate(node);
-					newRoot->parent_ = parent; // 设置新根的父指针
-					return newRoot;
+					return rightRotate(node); //父指针的更新在旋转操作里做了
 				}
 				else   //2. LR情形 左孩子的右子树太高
 				{
-					Node* newRoot = leftBalance(node);
-					newRoot->parent_ = parent; // 设置新根的父指针
-					return newRoot;
+					return leftBalance(node);
 				}
 			}
 		}
@@ -627,24 +633,20 @@ private:
 				Node* child = node->right_;
 				if (height(child->right_) >= height(child->left_)) //1. RR情形 右孩子的右子树太高
 				{
-					Node* newRoot = leftRotate(node);
-					newRoot->parent_ = parent; // 设置新根的父指针
-					return newRoot;
+					return leftRotate(node);
 				}
 				else   //2. RL情形 左孩子的右子树太高
 				{
-					Node* newRoot = rightBalance(node);
-					newRoot->parent_ = parent; // 设置新根的父指针
-					return newRoot;
+					return rightBalance(node);
 				}
 			}
 		}
-		//添加3 在递归回溯时检测更新节点高度(上面也进行了节点高度的更新，但是是失衡时进行的，不失衡时没更新节点高度，但是你插入了节点，祖先节点高度变化了那必须得更新)
+		//添加3 在递归回溯时检测更新节点高度
 		node->height_ = std::max(height(node->left_), height(node->right_)) + 1;
 		return node;
 	}
-	//AVL树的删除操作递归实现 在根节点为node的树上，找到val节点删除它，并返回val节点的孩子节点的地址，以连到被删除节点的父节点上去
-	Node* remove(Node* node, Node* parent, int& size_, const T& val)
+	/**  AVL树的删除操作递归实现 在根节点为node的树上，找到val节点删除它，并返回val节点的孩子节点的地址，以连到被删除节点的父节点上去 */
+	Node* remove(Node* node, int& size_, const T& val)
 	{
 		if (node == nullptr) { //没找到
 			return nullptr;
@@ -654,14 +656,14 @@ private:
 			//情形3
 			if (node->left_ != nullptr && node->right_ != nullptr)
 			{
-				//*****为了避免删除前驱或后继造成节点失衡，谁高删除谁
+				//*****为了尽量避免删除前驱或后继造成节点失衡，谁高删除谁
 				if (height(node->left_) >= height(node->right_)) //删前驱
 				{
 					Node* cur = node->left_;
 					while (cur->right_ != nullptr)
 						cur = cur->right_;
 					node->data_ = cur->data_; //2.覆盖数据并递归删除
-					node->left_ = remove(node->left_, node, size_, cur->data_); //3.现在要删的是前驱节点cur了,同时更新node的左孩子域
+					node->left_ = remove(node->left_, size_, cur->data_); //3.现在要删的是前驱节点cur了,同时更新node的左孩子域
 				}
 				else  //删后继
 				{
@@ -669,7 +671,7 @@ private:
 					while (cur->left_ != nullptr)
 						cur = cur->left_;
 					node->data_ = cur->data_;
-					node->right_ = remove(node->right_, node, size_, cur->data_);
+					node->right_ = remove(node->right_, size_, cur->data_);
 				}
 			}
 			else if (node->left_ == nullptr && node->right_ == nullptr) //情形1
@@ -683,9 +685,7 @@ private:
 				if (node->left_ != nullptr)
 				{
 					Node* child = node->left_;
-					if (child) {
-						child->parent_ = parent;
-					}
+					child->parent_ = node->parent_;
 					delete node;
 					size_--;
 					return child;
@@ -693,9 +693,7 @@ private:
 				else
 				{
 					Node* child = node->right_;
-					if (child) {
-						child->parent_ = parent;
-					}
+					child->parent_ = node->parent_;
 					delete node;
 					size_--;
 					return child;
@@ -704,7 +702,7 @@ private:
 		}
 		else if (node->data_ > val)
 		{
-			node->left_ = remove(node->left_, node, size_, val);
+			node->left_ = remove(node->left_, size_, val);
 
 			//*****左子树删除节点，可能造成右子树太高
 			if (height(node->right_) - height(node->left_) > 1)
@@ -722,7 +720,7 @@ private:
 		}
 		else
 		{
-			node->right_ = remove(node->right_, node, size_, val);
+			node->right_ = remove(node->right_, size_, val);
 
 			//*****右子树删除节点，可能造成左子树太高
 			if (height(node->left_) - height(node->right_) > 1)
@@ -745,7 +743,7 @@ private:
 	}
 
 	//-----------------查询----------------------
-	//AVL树的查询操作递归实现（存在返回true，否则返回false）
+	/**  AVL树的查询操作递归实现（存在返回true，否则返回false）*/
 	bool find(Node* node, const T& val) const
 	{
 		if (node == nullptr) { //递归退出条件，此时没有查到
@@ -771,7 +769,7 @@ private:
 		int right_num = size(node->right_);
 		return left_num + right_num + 1;
 	}*/
-	//AVL树层数查询递归实现
+	/**  AVL树层数查询递归实现 */
 	int high(Node* node) const
 	{
 		if (node == nullptr) {
@@ -782,7 +780,7 @@ private:
 		return std::max(l_high, r_high) + 1;
 		//return l_high > r_high ? l_high + 1 : r_high + 1;
 	}
-	//AVL树每一层的节点数递归实现（类似层数查询）
+	/**  AVL树每一层的节点数递归实现（类似层数查询）*/
 	int levelNum(Node* node, int i) const
 	{
 		if (node == nullptr) {
@@ -795,7 +793,7 @@ private:
 		int right = levelNum(node->right_, i - 1);
 		return left + right;
 	}
-	//判断是否是AVL树        递归过程中记录节点的高度值  返回节点的高度值
+	/** 判断是否是AVL树   递归过程中记录节点的高度值  返回节点的高度值 */
 	int isBalance(Node* node, int l, bool& flag) const
 	{
 		if (node == nullptr)
@@ -820,7 +818,7 @@ private:
 	}
 
 	//------------------遍历--------------------
-	//前序遍历VLR
+	/** 前序遍历VLR */
 	void preOrder(Node* node) const
 	{
 		if (node != nullptr)
@@ -830,7 +828,7 @@ private:
 			preOrder(node->right_); //R
 		}
 	}
-	//中序遍历LVR
+	/**  中序遍历LVR */
 	void inOrder(Node* node) const
 	{
 		if (node != nullptr)
@@ -840,7 +838,7 @@ private:
 			inOrder(node->right_); //R
 		}
 	}
-	//后序遍历LRV
+	/**  后序遍历LRV */
 	void postOrder(Node* node) const
 	{
 		if (node != nullptr)
@@ -850,7 +848,7 @@ private:
 			std::cout << node->data_ << " ";
 		}
 	}
-	//层序遍历
+	/** 层序遍历 */
 	void levelOrder(Node* node, int i) const
 	{
 		if (node == nullptr) {
@@ -866,7 +864,7 @@ private:
 	}
 
 	//-----------------辅助函数-------------------
-		// 递归复制子树 (核心深拷贝函数)
+	/**   递归复制子树(核心深拷贝函数) */
 	Node* copyTree(Node* node) {
 		if (node == nullptr) {
 			return nullptr;
@@ -883,7 +881,7 @@ private:
 
 		return newNode;
 	}
-	//重载[]运算符时使用，返回中序遍历结果中索引为i的元素
+	/**  重载[]运算符时使用，返回中序遍历结果中索引为i的元素（递归中序遍历） */
 	void inOrderIndex(Node* node, const int index, int& m, T& result) const
 	{
 		if (node != nullptr)
@@ -906,14 +904,14 @@ private:
 
 };
 
-//--------------部分成员函数类外实现---------------
-//1.赋值操作，= 运算符重载，也可以防止浅拷贝问题
+//--------------部分成员函数类外实现-------------- -
+/**  1.赋值操作，= 运算符重载，也可以防止浅拷贝问题（类外实现） */
 template<class T>
 AvlTree1<T>& AvlTree1<T>::operator=(const AvlTree1<T>& avl){
 if (this != &avl) //防止自赋值误操作(避免"自杀式"资源释放)，如tree = tree;
 {
-	AvlTree1 temp(avl); // 利用拷贝构造创建临时副本
-	swap(*this, temp); // 交换当前对象和副本
+	AvlTree1 temp(avl);
+	swap(*this, temp);
 } // 临时对象销毁（自动清理原资源）
 return *this;
 }
@@ -924,8 +922,11 @@ void AvlTree1<T>::swap(AvlTree1<T>& first, AvlTree1<T>& second) noexcept {
 	swap(first.root_, second.root_);
 	swap(first.size_, second.size_);
 }
-//2.[]运算符重载，通过下标的方式访问树的元素，默认按中序遍历访问
-//非递归方式，利用栈
+/** 2.[]运算符重载，通过下标的方式访问树的元素，默认按中序遍历访问。
+   非递归方式，利用栈
+   \param index 索引下标值
+   \return 中序遍历序列中索引对应元素
+*/
 template<class T>
 T& AvlTree1<T>::operator[](const int index) const {
 	if (index < 0 || index >= size()) {
@@ -934,7 +935,7 @@ T& AvlTree1<T>::operator[](const int index) const {
 	int m = 0; //计数器标志位
 	return n_inOrder(index, m);
 }
-//非递归中序遍历，按照输入索引返回中序遍历序列对应元素
+/**  非递归中序遍历，按照输入索引返回中序遍历序列对应元素 */
 template<class T>
 T& AvlTree1<T>::n_inOrder(const int index, int& m) const {
 	std::stack<Node*> s;

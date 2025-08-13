@@ -1,15 +1,14 @@
-﻿/* **************************************************
- * Copyright © 2025, Wuxi Xinje Electric Co., Ltd.
- *
- * File Name: test.cpp
- * Description: 测试AVL树功能
- * Author: lcd
- * Date: 2025-08-11
- * **************************************************/
+﻿/*****************************************************************//**
+ * \file   test.cpp
+ * \brief  测试avl树 
+ * 
+ * \author lcd
+ * \date   August 2025
+ *********************************************************************/
 
 #include "myavl.hpp"
 
-//遍历树等信息查询
+///遍历树等信息查询
 void show01(xjcad::lcd::AvlTree1<int>& avl) {
 	//遍历
 	avl.preOrder();
@@ -25,7 +24,7 @@ void show01(xjcad::lcd::AvlTree1<int>& avl) {
 	std::cout << "-----------------------------------------------" << std::endl;
 }
 
-//迭代器双向遍历
+///迭代器双向遍历
 void show02(xjcad::lcd::AvlTree1<int>& avl, xjcad::lcd::AvlTree1<int>::Iterator& it) {
 
 	std::cout << "前序遍历1：";
@@ -62,23 +61,23 @@ void show02(xjcad::lcd::AvlTree1<int>& avl, xjcad::lcd::AvlTree1<int>::Iterator&
 	std::cout << "------------------------" << std::endl;
 }
 
-//测试插入、删除
+///测试插入、删除
 void test01(xjcad::lcd::AvlTree1<int>& avl) {
 
 	show01(avl);
 
-	////删除测试
-	//std::cout <<"树中是否存在结点9："<< avl.find(9) << std::endl;
-	//std::cout << "---删除9：" << std::endl;
-	//avl.remove(9);
-	//std::cout << "树中是否存在结点9：" << avl.find(9) << std::endl;
+	//删除测试
+	std::cout <<"树中是否存在结点9："<< avl.find(9) << std::endl;
+	std::cout << "---删除9：" << std::endl;
+	avl.remove(9);
+	std::cout << "树中是否存在结点9：" << avl.find(9) << std::endl;
 
 	//std::cout << "---删除10：" << std::endl;
 	//avl.remove(10);
 
 	//std::cout << "---删除6：" << std::endl;
 	//avl.remove(6);
-	//
+	////
 	//std::cout << "---删除1,2,3：" << std::endl;
 	//avl.remove(1);
 	//avl.remove(2);
@@ -87,7 +86,7 @@ void test01(xjcad::lcd::AvlTree1<int>& avl) {
 	show01(avl);
 }
 
-//测试拷贝与赋值
+///测试拷贝与赋值
 void test02(xjcad::lcd::AvlTree1<int>& avl) {
 	// 深拷贝
 	std::cout << "---深拷贝验证：" << std::endl;
@@ -133,7 +132,7 @@ void test02(xjcad::lcd::AvlTree1<int>& avl) {
 	std::cout << "---------------------------------------------" << std::endl;
 }
 
-//迭代器测试
+///迭代器测试
 void test03(xjcad::lcd::AvlTree1<int>& avl, xjcad::lcd::AvlTree1<int>::Iterator& it) {
 
 	//++、-- 测试（改变原迭代器）
@@ -244,7 +243,7 @@ int main()
 
 	xjcad::lcd::AvlTree1<int>::Iterator it = avl.begin();
 
-	//show02(avl, it); //打印avl树遍历信息
+	show02(avl, it); //打印avl树遍历信息
 
 	//test03(avl, it);
 
